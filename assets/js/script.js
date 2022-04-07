@@ -1,6 +1,6 @@
 // store date of page load
 let now = moment(); // use moment("10", "H") to move "now" around to test
-let today = moment().format("YYYYMMDD");
+let today = now.format("YYYYMMDD");
 // set work day's beginning hour in 24h time
 let dayStart = 8;
 
@@ -27,7 +27,7 @@ function writeRows() {
     }
     // set text for .hour div from rowHour
     let rowTime = moment(`${rowHour}`, "h").format("hA");
-    container.innerHTML += `<div class="row time-block"><div class="col-1 pt-4 hour">${rowTime}</div><textarea class="${rowColor} col-10" data-hour="${rowHour}"></textarea><button class="col-1 saveBtn"><i class="fas fa-save"></i></button></div>`;
+    container.innerHTML += `<div class="row time-block"><div class="col-1 pt-4 hour">${rowTime}</div><textarea class="${rowColor} col-10 text-dark" data-hour="${rowHour}"></textarea><button class="col-1 saveBtn"><i class="fas fa-save"></i></button></div>`;
   }
 }
 
