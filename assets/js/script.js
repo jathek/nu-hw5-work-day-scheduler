@@ -1,5 +1,5 @@
 // store date of page load
-let now = moment();
+let now = moment(); // use moment("10", "H") to move "now" around to test
 // set work day's beginning hour in 24h time
 let dayStart = 8;
 
@@ -15,13 +15,18 @@ function writeRows() {
   for (let i = 0; i < 9; i++) {
     // set row's hour by adding i to dayStart
     let rowHour = dayStart + i;
-    // handle schedules over midnight
-    if (rowHour > 24) {
-      rowHour -= 24;
+    // set var for current hour
+    console.log(now.format("H"));
+    // set row color based on current hour
+    let rowColor = "present"
+    if (rowHour < now.format("H")) {
+      rowColor = "past"
+    } else if (rowHour > now.format("H")) {
+      rowColor = "future"
     }
-    console.log(rowHour);
     // set text for .hour div from rowHour
+    console.log(rowHour);
     let rowTime = moment(`${rowHour}`, "h").format("hA");
-    container.innerHTML += `<div class="row time-block" data-hour="${rowHour}"><div class="col-2 hour">${rowTime}</div><textarea class="col-8"></textarea><button class="col-2 saveBtn"><i class="fad fa-save"></i></button></div>`;
+    container.innerHTML += `<div class="row time-block" data-hour="${rowHour}"><div class="col-1 pt-4 hour">${rowTime}</div><textarea class="${rowColor} col-10"></textarea><button class="col-1 saveBtn"><i class="fas fa-save"></i></button></div>`;
   }
 }
