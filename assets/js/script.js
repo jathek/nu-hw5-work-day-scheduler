@@ -8,8 +8,8 @@ let dayStart = 8;
 let currentDayHeading = document.querySelector("#currentDay");
 currentDayHeading.innerText = now.format("dddd[, ]MMMM Do");
 
-let container = document.querySelector(".container");
 // write rows for hours on page load
+let container = document.querySelector(".container");
 writeRows();
 function writeRows() {
   // loop for 9 rows (8 work hours + lunch)
@@ -27,10 +27,12 @@ function writeRows() {
     }
     // set text for .hour div from rowHour
     let rowTime = moment(`${rowHour}`, "h").format("hA");
+    // append a row for each hour
     container.innerHTML += `<div class="row time-block"><div class="col-1 pt-4 hour">${rowTime}</div><textarea class="${rowColor} col-10 text-dark" data-hour="${rowHour}"></textarea><button class="col-1 saveBtn" data-hour="${rowHour}"><i class="fas fa-save" data-hour="${rowHour}"></i></button></div>`;
   }
 }
 
+// set schedules from localStorage
 let schedules = JSON.parse(localStorage.getItem("schedules"));
 if (schedules === null) {
   schedules = {};
@@ -39,8 +41,11 @@ if (schedules[today] === undefined) {
   schedules[today] = {};
 }
 
+// write localstorage values to schedule
 function writeSchedule() {
+  // get textareas from document
   let textAreas = document.querySelectorAll("textarea");
+  // iterate through textAreas and set each textarea to today's data from localStorage
   for (let i = 0; i < textAreas.length; i++) {
     let selectedHour = Number(textAreas[i].dataset.hour);
     let hourSchedule = schedules[today][selectedHour];
@@ -49,16 +54,26 @@ function writeSchedule() {
     }
   }
 }
+// write the schedule on page load
 writeSchedule();
 
+// submitData: save user input to localstorage
+// variables for click targets
 let saveButtons = document.querySelectorAll(".saveBtn");
 let saveIcons = document.querySelectorAll(".saveBtn > i");
+// set click listener for button and i elems
 (saveButtons || saveIcons).forEach((element) => {
   element.addEventListener("click", submitData);
 });
 function submitData(event) {
+  // selectedHour equal to data-hour from button or i
   let selectedHour = event.target.dataset.hour;
-  let entryArea = document.querySelector(`textarea[data-hour="${selectedHour}"]`)
+  // textarea to modify is identified based on selectedHour
+  let entryArea = document.querySelector(
+    `textarea[data-hour="${selectedHour}"]`
+  );
+  // schedules object is modified to submitted value
   schedules[today][selectedHour] = entryArea.value.trim();
+  // submit to localStorage
   localStorage.setItem("schedules", JSON.stringify(schedules));
 }
