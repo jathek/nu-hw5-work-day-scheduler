@@ -27,7 +27,7 @@ function writeRows() {
     }
     // set text for .hour div from rowHour
     let rowTime = moment(`${rowHour}`, "h").format("hA");
-    container.innerHTML += `<div class="row time-block"><div class="col-1 pt-4 hour">${rowTime}</div><textarea class="${rowColor} col-10 text-dark" data-hour="${rowHour}"></textarea><button class="col-1 saveBtn"><i class="fas fa-save"></i></button></div>`;
+    container.innerHTML += `<div class="row time-block"><div class="col-1 pt-4 hour">${rowTime}</div><textarea class="${rowColor} col-10 text-dark" data-hour="${rowHour}"></textarea><button class="col-1 saveBtn" data-hour="${rowHour}"><i class="fas fa-save" data-hour="${rowHour}"></i></button></div>`;
   }
 }
 
@@ -57,14 +57,8 @@ let saveIcons = document.querySelectorAll(".saveBtn > i");
   element.addEventListener("click", submitData);
 });
 function submitData(event) {
-  let entryArea;
-  if (event.target.matches(".saveBtn")) {
-    entryArea = event.target.parentNode.querySelector("textarea");
-  }
-  if (event.target.matches("i")) {
-    entryArea = event.target.parentNode.parentNode.querySelector("textarea");
-  }
-  let selectedHour = entryArea.dataset.hour;
+  let selectedHour = event.target.dataset.hour;
+  let entryArea = document.querySelector(`textarea[data-hour="${selectedHour}"]`)
   schedules[today][selectedHour] = entryArea.value.trim();
   localStorage.setItem("schedules", JSON.stringify(schedules));
 }
