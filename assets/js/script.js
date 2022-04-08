@@ -1,5 +1,5 @@
 // store date of page load
-let now = moment(); // use moment("10", "H") to move "now" around to test
+let now = moment("10", "H"); // use moment("10", "H") to move "now" around to test
 let today = now.format("YYYYMMDD");
 // set work day's beginning hour in 24h time
 let dayStart = 8;

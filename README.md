@@ -79,7 +79,7 @@
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Enter tasks in the appropriate hour and then click the save button to plan out your day.
+Enter tasks in the appropriate hour and then click the save button to plan out your day. Past hours are grey, future hours are green, and the present hour is red.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
